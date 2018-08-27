@@ -6,16 +6,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.primegi.gamedev.icicles.Constants;
+import com.primegi.gamedev.icicles.Constants.Difficulty.DifficultyLevel;
 
 public class Icicles {
     public static final String TAG = Icicles.class.getSimpleName();
 
     DelayedRemovalArray<Icicle> icicleList;
 
+    private DifficultyLevel difficultyLevel;
     private Viewport viewport;
     private int iciclesDodged;
 
-    public Icicles(Viewport viewport) {
+    public Icicles(Viewport viewport, DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
         this.viewport = viewport;
         init();
     }
@@ -27,7 +30,7 @@ public class Icicles {
     }
 
     public void update(float delta) {
-        if (MathUtils.random() < delta * Constants.Icicle.ICICLE_SPAWNS_PER_SECOND) {
+        if (MathUtils.random() < delta * difficultyLevel.spawnRate) {
             final Vector2 newIciclePosition = new Vector2(
                     MathUtils.random() * viewport.getWorldWidth(),
                     viewport.getWorldHeight());
