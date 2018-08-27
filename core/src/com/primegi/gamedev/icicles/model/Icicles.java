@@ -1,15 +1,16 @@
-package com.primegi.gamedev.icicles;
+package com.primegi.gamedev.icicles.model;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.primegi.gamedev.icicles.Constants;
 
 public class Icicles {
     public static final String TAG = Icicles.class.getSimpleName();
 
-    private DelayedRemovalArray<Icicle> icicleList;
+    DelayedRemovalArray<Icicle> icicleList;
     private Viewport viewport;
 
     public Icicles(Viewport viewport) {

@@ -1,10 +1,11 @@
-package com.primegi.gamedev.icicles;
+package com.primegi.gamedev.icicles.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.primegi.gamedev.icicles.Constants;
 
 public class Player {
     public static final String TAG = Player.class.getSimpleName();
@@ -17,6 +18,7 @@ public class Player {
         init();
     }
 
+    //region Public API
     public void init() {
         position = new Vector2(viewport.getWorldWidth() / 2, Constants.Player.PLAYER_HEAD_HEIGHT);
     }
@@ -33,30 +35,6 @@ public class Player {
         }
 
         ensureInBounds();
-    }
-
-    private void accelerometerControls(float delta) {
-        float accelerometerInput = -Gdx.input.getAccelerometerY() /
-                (Constants.Physics.GRAVITATIONAL_ACCELERATION * Constants.Sensors.ACCELEROMETER_SENSITIVITY);
-
-        position.x += -delta * accelerometerInput * Constants.Player.PLAYER_MOVEMENT_SPEED;
-    }
-
-    private void keyControls(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            position.x -= delta * Constants.Player.PLAYER_MOVEMENT_SPEED;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            position.x += delta * Constants.Player.PLAYER_MOVEMENT_SPEED;
-        }
-    }
-
-    private void ensureInBounds() {
-        if (position.x - Constants.Player.PLAYER_HEAD_RADIUS < 0) {
-            position.x = Constants.Player.PLAYER_HEAD_RADIUS;
-        }
-        if (position.x + Constants.Player.PLAYER_HEAD_RADIUS > viewport.getWorldWidth()) {
-            position.x = viewport.getWorldWidth() - Constants.Player.PLAYER_HEAD_RADIUS;
-        }
     }
 
     public void render(ShapeRenderer renderer) {
@@ -84,4 +62,43 @@ public class Player {
                 torsoBottom.x, torsoBottom.y,
                 torsoBottom.x - Constants.Player.PLAYER_HEAD_RADIUS, torsoBottom.y - Constants.Player.PLAYER_HEAD_RADIUS, Constants.Player.PLAYER_LIMB_WIDTH);
     }
+
+    public boolean hitByIcicle(Icicles icicles) {
+        boolean isHit = false;
+
+        for (final Icicle icicle : icicles.icicleList) {
+            if (icicle.position.dst(position) < Constants.Player.PLAYER_HEAD_RADIUS) {
+                isHit = true;
+            }
+        }
+
+        return isHit;
+    }
+    //endregion Public API
+
+    //region Private Methods
+    private void accelerometerControls(float delta) {
+        float accelerometerInput = -Gdx.input.getAccelerometerY() /
+                (Constants.Physics.GRAVITATIONAL_ACCELERATION * Constants.Sensors.ACCELEROMETER_SENSITIVITY);
+
+        position.x += -delta * accelerometerInput * Constants.Player.PLAYER_MOVEMENT_SPEED;
+    }
+
+    private void keyControls(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            position.x -= delta * Constants.Player.PLAYER_MOVEMENT_SPEED;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            position.x += delta * Constants.Player.PLAYER_MOVEMENT_SPEED;
+        }
+    }
+
+    private void ensureInBounds() {
+        if (position.x - Constants.Player.PLAYER_HEAD_RADIUS < 0) {
+            position.x = Constants.Player.PLAYER_HEAD_RADIUS;
+        }
+        if (position.x + Constants.Player.PLAYER_HEAD_RADIUS > viewport.getWorldWidth()) {
+            position.x = viewport.getWorldWidth() - Constants.Player.PLAYER_HEAD_RADIUS;
+        }
+    }
+    //endregion Private Methods
 }

@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.primegi.gamedev.icicles.model.Icicles;
+import com.primegi.gamedev.icicles.model.Player;
 
 public class IciclesScreen implements Screen {
     public static final String TAG = IciclesScreen.class.getSimpleName();
@@ -30,6 +32,10 @@ public class IciclesScreen implements Screen {
     public void render(float delta) {
         player.update(delta);
         icicles.update(delta);
+
+        if (player.hitByIcicle(icicles)) {
+            icicles.init();
+        }
 
         iciclesViewport.apply(true);
         Gdx.gl.glClearColor(Constants.World.BACKGROUND_COLOR.r,

@@ -1,7 +1,8 @@
-package com.primegi.gamedev.icicles;
+package com.primegi.gamedev.icicles.model;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.primegi.gamedev.icicles.Constants;
 
 public class Icicle {
     public static final String TAG = Icicle.class.getSimpleName();
