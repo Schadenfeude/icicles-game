@@ -9,6 +9,11 @@ public class Constants {
         public static final Color BACKGROUND_COLOR = Color.BLUE;
     }
 
+    public static class HUD {
+        public static final float HUD_FONT_REFERENCE_SCREEN_SIZE = 480.0f;
+        public static final float HUD_MARGIN = 20.0f;
+    }
+
     public static class Sensors {
         public static final float ACCELEROMETER_SENSITIVITY = 0.5f;
     }

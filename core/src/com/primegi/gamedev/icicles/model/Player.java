@@ -13,8 +13,11 @@ public class Player {
     private Vector2 position;
     private Viewport viewport;
 
+    private int deaths;
+
     public Player(Viewport viewport) {
         this.viewport = viewport;
+        deaths = 0;
         init();
     }
 
@@ -72,7 +75,15 @@ public class Player {
             }
         }
 
+        if (isHit) {
+            deaths += 1;
+        }
+
         return isHit;
+    }
+
+    public int getDeaths() {
+        return deaths;
     }
     //endregion Public API
 
